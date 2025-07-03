@@ -1,0 +1,815 @@
+/* Reset and base styles - StoreHub Demo Kiosk Design */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  font-family: 'Inter', 'Segoe UI', 'Arial', sans-serif;
+  background-color: #f8fafb;
+  /* Optimized for 27" display - crisp rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* StoreHub Color Variables */
+:root {
+  --storehub-primary: #00a693;    /* StoreHub Teal */
+  --storehub-primary-dark: #008a7a;
+  --storehub-primary-light: #1bb5a3;
+  --storehub-secondary: #2c5aa0;   /* StoreHub Blue */
+  --storehub-accent: #ff6b35;     /* Accent Orange */
+  --storehub-success: #28a745;
+  --storehub-background: #f8fafb;
+  --storehub-white: #ffffff;
+  --storehub-gray-100: #f8f9fa;
+  --storehub-gray-200: #e9ecef;
+  --storehub-gray-300: #dee2e6;
+  --storehub-gray-600: #6c757d;
+  --storehub-gray-800: #343a40;
+  --storehub-gray-900: #212529;
+}
+
+/* imin Crane1 Kiosk Optimization: 27" display, likely 1920x1080 portrait */
+@media screen and (min-height: 1080px) and (max-width: 1920px) {
+  .welcome-title {
+    font-size: 6rem !important;
+  }
+  
+  .welcome-subtitle {
+    font-size: 3rem !important;
+  }
+  
+  .start-button {
+    font-size: 3rem !important;
+    padding: 50px 120px !important;
+  }
+  
+  .header-title {
+    font-size: 4rem !important;
+  }
+  
+  .cart-button {
+    font-size: 2.2rem !important;
+    padding: 25px 50px !important;
+  }
+  
+  .category-card {
+    min-height: 400px !important;
+    padding: 80px !important;
+  }
+  
+  .category-icon-container svg {
+    font-size: 5rem !important;
+  }
+  
+  .category-emoji {
+    font-size: 4rem !important;
+  }
+  
+  .category-name {
+    font-size: 3rem !important;
+  }
+  
+  .item-card {
+    min-height: 450px !important;
+    padding: 40px !important;
+  }
+  
+  .item-icon {
+    font-size: 5rem !important;
+  }
+  
+  .item-name {
+    font-size: 2.2rem !important;
+  }
+  
+  .item-price {
+    font-size: 2.8rem !important;
+  }
+  
+  .add-button {
+    font-size: 1.6rem !important;
+    padding: 20px 40px !important;
+  }
+}
+
+/* Welcome Screen - StoreHub Branded */
+.welcome-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, var(--storehub-primary), var(--storehub-primary-light));
+  padding: 80px;
+  text-align: center;
+  position: relative;
+}
+
+.welcome-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+  opacity: 0.3;
+}
+
+.welcome-title {
+  font-size: 5.5rem;
+  font-weight: 700;
+  color: var(--storehub-white);
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  animation: slideInDown 1s ease-out;
+  letter-spacing: -1px;
+  z-index: 1;
+  position: relative;
+}
+
+.welcome-subtitle {
+  font-size: 2.8rem;
+  color: var(--storehub-white);
+  margin-bottom: 40px;
+  opacity: 0.95;
+  animation: slideInUp 1s ease-out 0.2s both;
+  font-weight: 400;
+  z-index: 1;
+  position: relative;
+}
+
+.welcome-features {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: 60px;
+  animation: fadeIn 1s ease-out 0.4s both;
+  z-index: 1;
+  position: relative;
+}
+
+.feature-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--storehub-white);
+  opacity: 0.9;
+  padding: 30px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.feature-icon {
+  font-size: 3.5rem;
+  margin-bottom: 15px;
+  animation: bounce 3s infinite;
+  color: var(--storehub-white);
+}
+
+.feature-item span {
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.start-button {
+  background: var(--storehub-white);
+  color: var(--storehub-primary);
+  font-size: 2.8rem;
+  font-weight: 700;
+  padding: 50px 120px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  transition: all 0.4s ease;
+  animation: slideInUp 1s ease-out 0.6s both;
+  min-width: 400px;
+  min-height: 120px;
+  position: relative;
+  z-index: 1;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.start-button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 45px rgba(0,0,0,0.3);
+  background: var(--storehub-gray-100);
+}
+
+.start-button:active {
+  transform: translateY(-2px);
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+/* StoreHub Branding Badge */
+.welcome-container::after {
+  content: 'Powered by StoreHub';
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.2rem;
+  font-weight: 500;
+  z-index: 1;
+}
+
+/* Animations optimized for smooth performance on Android */
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-80px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(80px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-15px);
+  }
+  60% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 25px 45px rgba(0,0,0,0.3);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  }
+}
+
+/* Menu Container - StoreHub Styled */
+.menu-container, .cart-container {
+  height: 100vh;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  animation: slideInRight 0.5s ease-out;
+  background: var(--storehub-background);
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Header - StoreHub Style */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 60px;
+  padding: 0 30px;
+  background: var(--storehub-white);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.header-title {
+  font-size: 4rem;
+  font-weight: 700;
+  color: var(--storehub-gray-900);
+  text-shadow: none;
+}
+
+.cart-button {
+  background: var(--storehub-primary);
+  color: var(--storehub-white);
+  font-size: 2rem;
+  font-weight: 600;
+  padding: 25px 50px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 166, 147, 0.3);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  min-height: 80px;
+}
+
+.cart-button:hover {
+  background: var(--storehub-primary-dark);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0, 166, 147, 0.4);
+}
+
+.cart-icon {
+  font-size: 1.8rem;
+}
+
+/* Categories Grid - StoreHub Branded */
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  padding: 0 20px;
+  flex-grow: 1;
+  align-content: center;
+}
+
+.category-card {
+  background: var(--storehub-white);
+  border: 3px solid transparent;
+  border-radius: 25px;
+  padding: 80px;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  transition: all 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 350px;
+  position: relative;
+  overflow: hidden;
+  min-width: 300px;
+}
+
+.category-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, transparent, rgba(0, 166, 147, 0.05));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  border-color: var(--storehub-primary);
+}
+
+.category-card:hover::before {
+  opacity: 1;
+}
+
+.category-card:active {
+  transform: scale(0.95);
+}
+
+.category-icon-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 40px;
+  z-index: 1;
+  position: relative;
+}
+
+.category-icon-container svg {
+  font-size: 4.5rem;
+  color: var(--storehub-primary);
+  transition: all 0.3s ease;
+}
+
+.category-card:hover .category-icon-container svg {
+  transform: scale(1.1);
+  color: var(--storehub-primary-dark);
+}
+
+.category-emoji {
+  font-size: 3.5rem;
+}
+
+.category-name {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--storehub-gray-900);
+  text-align: center;
+  z-index: 1;
+  position: relative;
+}
+
+/* Items Grid - StoreHub Professional */
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  padding: 0 20px;
+  flex-grow: 1;
+  align-content: start;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--storehub-primary) var(--storehub-gray-200);
+}
+
+.items-grid::-webkit-scrollbar {
+  width: 8px;
+}
+
+.items-grid::-webkit-scrollbar-track {
+  background: var(--storehub-gray-200);
+  border-radius: 4px;
+}
+
+.items-grid::-webkit-scrollbar-thumb {
+  background: var(--storehub-primary);
+  border-radius: 4px;
+}
+
+.item-card {
+  background: var(--storehub-white);
+  border: 2px solid var(--storehub-gray-200);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 400px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.item-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, transparent, rgba(0, 166, 147, 0.03));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.item-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+  border-color: var(--storehub-primary);
+}
+
+.item-card:hover::before {
+  opacity: 1;
+}
+
+.item-icon {
+  font-size: 4.5rem;
+  margin-bottom: 25px;
+  z-index: 1;
+  position: relative;
+}
+
+.item-name {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--storehub-gray-900);
+  text-align: center;
+  margin-bottom: 20px;
+  line-height: 1.2;
+  z-index: 1;
+  position: relative;
+}
+
+.item-price {
+  font-size: 2.5rem;
+  color: var(--storehub-primary);
+  font-weight: 700;
+  margin-bottom: 25px;
+  z-index: 1;
+  position: relative;
+}
+
+.add-button {
+  background: var(--storehub-primary);
+  color: var(--storehub-white);
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding: 20px 40px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 60px;
+  min-width: 180px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 1;
+  position: relative;
+  box-shadow: 0 4px 15px rgba(0, 166, 147, 0.3);
+}
+
+.add-button:hover {
+  background: var(--storehub-primary-dark);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 166, 147, 0.4);
+}
+
+.add-button:active {
+  transform: scale(0.95);
+}
+
+.add-icon {
+  font-size: 1.2rem;
+}
+
+/* Cart Styles - StoreHub Professional */
+.cart-items {
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 40px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--storehub-primary) var(--storehub-gray-200);
+}
+
+.cart-items::-webkit-scrollbar {
+  width: 8px;
+}
+
+.cart-items::-webkit-scrollbar-track {
+  background: var(--storehub-gray-200);
+  border-radius: 4px;
+}
+
+.cart-items::-webkit-scrollbar-thumb {
+  background: var(--storehub-primary);
+  border-radius: 4px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  background: var(--storehub-white);
+  padding: 30px;
+  margin-bottom: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  animation: slideInLeft 0.3s ease-out;
+  min-height: 100px;
+  border-left: 4px solid var(--storehub-primary);
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.cart-item-icon {
+  font-size: 3.5rem;
+  margin-right: 40px;
+}
+
+.cart-item-name {
+  font-size: 2rem;
+  flex-grow: 1;
+  color: var(--storehub-gray-900);
+  font-weight: 500;
+}
+
+.cart-item-price {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--storehub-primary);
+}
+
+.empty-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  text-align: center;
+  color: var(--storehub-gray-600);
+  background: var(--storehub-white);
+  border-radius: 20px;
+  border: 2px dashed var(--storehub-gray-300);
+}
+
+.empty-cart-icon {
+  font-size: 5rem;
+  margin-bottom: 30px;
+  opacity: 0.6;
+  color: var(--storehub-gray-400);
+}
+
+.empty-cart p {
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.cart-footer {
+  background: var(--storehub-white);
+  padding: 50px;
+  border-radius: 25px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  margin-bottom: 40px;
+  border: 2px solid var(--storehub-gray-200);
+}
+
+.total-text {
+  font-size: 3.2rem;
+  font-weight: 700;
+  color: var(--storehub-gray-900);
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.checkout-button {
+  background: linear-gradient(135deg, var(--storehub-primary), var(--storehub-primary-light));
+  color: var(--storehub-white);
+  font-size: 2.5rem;
+  font-weight: 700;
+  padding: 30px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s ease;
+  min-height: 120px;
+  box-shadow: 0 10px 30px rgba(0, 166, 147, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.checkout-button:hover:not(.disabled) {
+  background: linear-gradient(135deg, var(--storehub-primary-dark), var(--storehub-primary));
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(0, 166, 147, 0.4);
+}
+
+.checkout-button:active:not(.disabled) {
+  transform: scale(0.98);
+}
+
+.checkout-button.disabled {
+  background: var(--storehub-gray-300);
+  cursor: not-allowed;
+  box-shadow: none;
+  color: var(--storehub-gray-600);
+}
+
+/* Back Button - StoreHub Style */
+.back-button {
+  background: var(--storehub-gray-600);
+  color: var(--storehub-white);
+  font-size: 2rem;
+  font-weight: 600;
+  padding: 25px 50px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  min-height: 80px;
+  box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+}
+
+.back-button:hover {
+  background: var(--storehub-gray-800);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(108, 117, 125, 0.4);
+}
+
+.back-button:active {
+  transform: scale(0.95);
+}
+
+/* Android-specific optimizations */
+@media (hover: none) {
+  .category-card:hover,
+  .item-card:hover,
+  .start-button:hover,
+  .cart-button:hover,
+  .add-button:hover,
+  .checkout-button:hover,
+  .back-button:hover,
+  .feature-item:hover {
+    transform: none !important;
+  }
+  
+  .category-card:hover .category-icon-container svg {
+    transform: none !important;
+    color: var(--storehub-primary) !important;
+  }
+  
+  .category-card:hover::before,
+  .item-card:hover::before {
+    opacity: 0 !important;
+  }
+}
+
+/* Ensure full screen usage and touch optimization */
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#root {
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Performance optimizations for Android */
+* {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+/* Loading states */
+.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Screen transitions */
+.screen-transition {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* High DPI display optimization */
+@media only screen and (min-device-pixel-ratio: 2) {
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+} 
