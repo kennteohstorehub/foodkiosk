@@ -220,7 +220,7 @@ const OrderHistoryScreen = () => {
                 <View style={styles.orderTitleRow}>
                   <Text style={styles.orderNumber}>{order.orderNumber}</Text>
                   <View style={[styles.statusIndicator, { backgroundColor: getStatusColor(order.status) }]}>
-                    <Icon name={getStatusIcon(order.status)} size={14} color="#fff" />
+                    <Icon name={getStatusIcon(order.status)} size={16} color="#fff" />
                   </View>
                 </View>
                 <Text style={styles.orderDate}>{order.date} at {order.time}</Text>
@@ -230,7 +230,7 @@ const OrderHistoryScreen = () => {
               </View>
               
               <View style={styles.orderHeaderRight}>
-                <Text style={styles.orderTotal}>${order.total.toFixed(2)}</Text>
+                <Text style={styles.orderTotal}>RM{order.total.toFixed(2)}</Text>
                 <View style={styles.statusRow}>
                   <Text style={[styles.statusText, { color: getStatusColor(order.status) }]}>
                     {getStatusText(order.status)}
@@ -255,7 +255,7 @@ const OrderHistoryScreen = () => {
                       <Text style={styles.itemQuantity}>{item.quantity}x</Text>
                       <Text style={styles.itemName}>{item.name}</Text>
                       <Text style={styles.itemPrice}>
-                        ${(item.price * item.quantity).toFixed(2)}
+                        RM{(item.price * item.quantity).toFixed(2)}
                       </Text>
                     </View>
                   ))}
@@ -302,10 +302,10 @@ const OrderHistoryScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#1a1a1a',
   },
   header: {
-    backgroundColor: '#fff',
+    backgroundColor: '#2d2d2d',
     paddingHorizontal: 20,
     paddingVertical: 20,
     elevation: 2,
@@ -313,35 +313,35 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#e0e0e0',
     marginBottom: 5,
   },
   headerSubtitle: {
     fontSize: 14,
-    color: '#666',
+    color: '#b0b0b0',
   },
   emptyContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 40,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#1a1a1a',
   },
   emptyText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#666',
+    color: '#b0b0b0',
     marginTop: 20,
     marginBottom: 10,
   },
   emptySubtext: {
     fontSize: 16,
-    color: '#999',
+    color: '#888',
     textAlign: 'center',
     lineHeight: 22,
   },
   filtersSection: {
-    backgroundColor: '#fff',
+    backgroundColor: '#2d2d2d',
     paddingVertical: 15,
     marginBottom: 10,
   },
@@ -354,7 +354,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 8,
     borderRadius: 20,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#404040',
     marginRight: 10,
   },
   filterItemSelected: {
@@ -362,7 +362,7 @@ const styles = StyleSheet.create({
   },
   filterText: {
     fontSize: 14,
-    color: '#666',
+    color: '#b0b0b0',
     fontWeight: '500',
   },
   filterTextSelected: {
@@ -370,27 +370,38 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   filterBadge: {
-    backgroundColor: '#666',
+    backgroundColor: '#888',
     color: '#fff',
     marginLeft: 5,
-    minWidth: 20,
-    height: 20,
-    borderRadius: 10,
+    minWidth: 22,
+    height: 22,
+    borderRadius: 11,
     fontSize: 10,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
   },
   filterBadgeSelected: {
     backgroundColor: '#fff',
     color: '#FF6B35',
+    borderColor: '#FF6B35',
+    elevation: 3,
   },
   ordersContainer: {
     flex: 1,
     padding: 15,
   },
   orderCard: {
-    backgroundColor: '#fff',
+    backgroundColor: '#2d2d2d',
     borderRadius: 12,
     marginBottom: 15,
     overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#404040',
   },
   orderHeader: {
     flexDirection: 'row',
@@ -409,24 +420,31 @@ const styles = StyleSheet.create({
   orderNumber: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#e0e0e0',
     marginRight: 10,
   },
   statusIndicator: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
     justifyContent: 'center',
     alignItems: 'center',
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    borderWidth: 2,
+    borderColor: 'rgba(255, 255, 255, 0.2)',
   },
   orderDate: {
     fontSize: 12,
-    color: '#666',
+    color: '#b0b0b0',
     marginBottom: 3,
   },
   orderItems: {
     fontSize: 12,
-    color: '#999',
+    color: '#888',
   },
   orderHeaderRight: {
     alignItems: 'flex-end',
@@ -448,12 +466,12 @@ const styles = StyleSheet.create({
   },
   estimatedTime: {
     fontSize: 10,
-    color: '#666',
+    color: '#b0b0b0',
     fontStyle: 'italic',
   },
   orderDetails: {
     borderTopWidth: 1,
-    borderTopColor: '#f0f0f0',
+    borderTopColor: '#404040',
     paddingTop: 15,
     paddingHorizontal: 15,
     paddingBottom: 15,
@@ -468,19 +486,19 @@ const styles = StyleSheet.create({
   },
   itemQuantity: {
     fontSize: 14,
-    color: '#666',
+    color: '#b0b0b0',
     width: 30,
     fontWeight: '500',
   },
   itemName: {
     fontSize: 14,
-    color: '#333',
+    color: '#e0e0e0',
     flex: 1,
   },
   itemPrice: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: '#666',
+    color: '#b0b0b0',
   },
   orderMetadata: {
     marginBottom: 15,
@@ -492,7 +510,7 @@ const styles = StyleSheet.create({
   },
   metadataText: {
     fontSize: 12,
-    color: '#666',
+    color: '#b0b0b0',
     marginLeft: 5,
   },
   orderActions: {
@@ -521,7 +539,7 @@ const styles = StyleSheet.create({
   receiptButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#404040',
     paddingHorizontal: 15,
     paddingVertical: 8,
     borderRadius: 20,
@@ -529,7 +547,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   receiptText: {
-    color: '#666',
+    color: '#b0b0b0',
     fontSize: 14,
     fontWeight: '500',
     marginLeft: 5,

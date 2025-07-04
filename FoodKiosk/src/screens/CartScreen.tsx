@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { Card, Button, IconButton, Divider, Surface, Badge } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import LogoButton from '../components/LogoButton';
 
 const { width } = Dimensions.get('window');
 
@@ -56,7 +57,7 @@ const CartScreen = () => {
 
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   const tax = subtotal * 0.08; // 8% tax
-  const deliveryFee = subtotal > 25 ? 0 : 2.99; // Free delivery over $25
+  const deliveryFee = subtotal > 25 ? 0 : 2.99; // Free delivery over RM25
   const total = subtotal + tax + deliveryFee;
 
   const updateQuantity = (id: string, newQuantity: number) => {
@@ -121,7 +122,7 @@ const CartScreen = () => {
 
     Alert.alert(
       'Proceed to Checkout',
-      `Total: $${total.toFixed(2)}\n\nChoose payment method:`,
+      `Total: RM${total.toFixed(2)}\n\nChoose payment method:`,
       [
         { text: 'Cancel', style: 'cancel' },
         { text: 'Cash', onPress: () => console.log('Cash payment selected') },
@@ -151,9 +152,11 @@ const CartScreen = () => {
           <Text style={styles.headerTitle}>Your Order</Text>
           <View style={styles.headerActions}>
             <Badge style={styles.itemBadge}>{cartItems.length}</Badge>
-            <TouchableOpacity onPress={clearCart} style={styles.clearButton}>
-              <Icon name="clear-all" size={20} color="#FF6B35" />
-            </TouchableOpacity>
+            <LogoButton
+              onPress={clearCart}
+              size={28}
+              backgroundColor="#FF6B35"
+            />
           </View>
         </View>
       </Surface>
@@ -172,7 +175,7 @@ const CartScreen = () => {
               
               <View style={styles.itemDetails}>
                 <Text style={styles.itemName}>{item.name}</Text>
-                <Text style={styles.itemPrice}>${item.price.toFixed(2)} each</Text>
+                <Text style={styles.itemPrice}>RM{item.price.toFixed(2)} each</Text>
                 
                 {item.customizations && (
                   <View style={styles.customizationsContainer}>
@@ -188,8 +191,9 @@ const CartScreen = () => {
                   <TouchableOpacity
                     style={styles.quantityButton}
                     onPress={() => updateQuantity(item.id, Math.max(0, item.quantity - 1))}
+                    activeOpacity={0.7}
                   >
-                    <Icon name="remove" size={18} color="#FF6B35" />
+                    <Icon name="remove" size={20} color="#FF6B35" />
                   </TouchableOpacity>
                   
                   <Text style={styles.quantityText}>{item.quantity}</Text>
@@ -197,22 +201,22 @@ const CartScreen = () => {
                   <TouchableOpacity
                     style={styles.quantityButton}
                     onPress={() => updateQuantity(item.id, item.quantity + 1)}
+                    activeOpacity={0.7}
                   >
-                    <Icon name="add" size={18} color="#FF6B35" />
+                    <Icon name="add" size={20} color="#FF6B35" />
                   </TouchableOpacity>
                 </View>
               </View>
               
               <View style={styles.itemActions}>
                 <Text style={styles.itemTotal}>
-                  ${(item.price * item.quantity).toFixed(2)}
+                  RM{(item.price * item.quantity).toFixed(2)}
                 </Text>
-                <TouchableOpacity
-                  style={styles.removeButton}
+                <LogoButton
                   onPress={() => removeItem(item.id)}
-                >
-                  <Icon name="close" size={16} color="#fff" />
-                </TouchableOpacity>
+                  size={32}
+                  backgroundColor="#FF4500"
+                />
               </View>
             </View>
           </Surface>
@@ -229,12 +233,12 @@ const CartScreen = () => {
         <View style={styles.summaryContent}>
           <View style={styles.summaryRow}>
             <Text style={styles.summaryLabel}>Subtotal ({cartItems.length} items)</Text>
-            <Text style={styles.summaryValue}>${subtotal.toFixed(2)}</Text>
+            <Text style={styles.summaryValue}>RM{subtotal.toFixed(2)}</Text>
           </View>
           
           <View style={styles.summaryRow}>
             <Text style={styles.summaryLabel}>Tax (8%)</Text>
-            <Text style={styles.summaryValue}>${tax.toFixed(2)}</Text>
+            <Text style={styles.summaryValue}>RM{tax.toFixed(2)}</Text>
           </View>
           
           <View style={styles.summaryRow}>
@@ -243,7 +247,7 @@ const CartScreen = () => {
               {subtotal > 25 && <Text style={styles.freeText}> (FREE)</Text>}
             </Text>
             <Text style={[styles.summaryValue, subtotal > 25 && styles.freeValue]}>
-              ${deliveryFee.toFixed(2)}
+              RM{deliveryFee.toFixed(2)}
             </Text>
           </View>
           
@@ -251,7 +255,7 @@ const CartScreen = () => {
             <View style={styles.promoContainer}>
               <Icon name="local-offer" size={16} color="#4CAF50" />
               <Text style={styles.promoText}>
-                Add ${(25 - subtotal).toFixed(2)} more for free delivery!
+                Add RM{(25 - subtotal).toFixed(2)} more for free delivery!
               </Text>
             </View>
           )}
@@ -260,7 +264,7 @@ const CartScreen = () => {
           
           <View style={styles.totalRow}>
             <Text style={styles.totalLabel}>Total</Text>
-            <Text style={styles.totalValue}>${total.toFixed(2)}</Text>
+            <Text style={styles.totalValue}>RM{total.toFixed(2)}</Text>
           </View>
           
           <Animated.View style={{ transform: [{ scale: buttonScale }] }}>
@@ -282,10 +286,10 @@ const CartScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#1a1a1a',
   },
   header: {
-    backgroundColor: '#fff',
+    backgroundColor: '#2d2d2d',
     paddingHorizontal: 20,
     paddingVertical: 15,
     elevation: 2,
@@ -298,7 +302,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#e0e0e0',
   },
   headerActions: {
     flexDirection: 'row',
@@ -309,26 +313,24 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginRight: 10,
   },
-  clearButton: {
-    padding: 5,
-  },
+
   emptyContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 40,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#1a1a1a',
   },
   emptyText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#666',
+    color: '#b0b0b0',
     marginTop: 20,
     marginBottom: 10,
   },
   emptySubtext: {
     fontSize: 16,
-    color: '#999',
+    color: '#888',
     textAlign: 'center',
     lineHeight: 22,
     marginBottom: 30,
@@ -349,10 +351,12 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   cartItem: {
-    backgroundColor: '#fff',
+    backgroundColor: '#2d2d2d',
     borderRadius: 12,
     marginBottom: 15,
     overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#404040',
   },
   itemRow: {
     flexDirection: 'row',
@@ -373,12 +377,12 @@ const styles = StyleSheet.create({
   itemName: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#e0e0e0',
     marginBottom: 5,
   },
   itemPrice: {
     fontSize: 14,
-    color: '#666',
+    color: '#b0b0b0',
     marginBottom: 8,
   },
   customizationsContainer: {
@@ -386,7 +390,7 @@ const styles = StyleSheet.create({
   },
   customizationText: {
     fontSize: 12,
-    color: '#999',
+    color: '#888',
     fontStyle: 'italic',
     marginBottom: 2,
   },
@@ -396,19 +400,26 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   quantityButton: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: '#f5f5f5',
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    backgroundColor: '#404040',
+    borderWidth: 2,
+    borderColor: '#FF6B35',
     justifyContent: 'center',
     alignItems: 'center',
+    elevation: 4,
+    shadowColor: '#FF6B35',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+    position: 'relative',
+    overflow: 'hidden',
   },
   quantityText: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#e0e0e0',
     marginHorizontal: 15,
     minWidth: 20,
     textAlign: 'center',
@@ -423,38 +434,28 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#FF6B35',
   },
-  removeButton: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: '#FF4500',
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 2,
-    shadowColor: '#FF4500',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-  },
+
   summaryCard: {
-    backgroundColor: '#fff',
+    backgroundColor: '#2d2d2d',
     marginHorizontal: 15,
     marginBottom: 15,
     borderRadius: 12,
     overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#404040',
   },
   summaryHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#404040',
     paddingHorizontal: 20,
     paddingVertical: 15,
   },
   summaryTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#e0e0e0',
   },
   summaryContent: {
     padding: 20,
@@ -467,12 +468,12 @@ const styles = StyleSheet.create({
   },
   summaryLabel: {
     fontSize: 14,
-    color: '#666',
+    color: '#b0b0b0',
   },
   summaryValue: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#333',
+    color: '#e0e0e0',
   },
   freeText: {
     color: '#4CAF50',
@@ -486,10 +487,12 @@ const styles = StyleSheet.create({
   promoContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f1f8e9',
+    backgroundColor: '#0d2818',
     padding: 10,
     borderRadius: 8,
     marginVertical: 8,
+    borderWidth: 1,
+    borderColor: '#4CAF50',
   },
   promoText: {
     fontSize: 12,
@@ -500,7 +503,7 @@ const styles = StyleSheet.create({
   divider: {
     marginVertical: 15,
     height: 1,
-    backgroundColor: '#e0e0e0',
+    backgroundColor: '#404040',
   },
   totalRow: {
     flexDirection: 'row',
@@ -511,7 +514,7 @@ const styles = StyleSheet.create({
   totalLabel: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#e0e0e0',
   },
   totalValue: {
     fontSize: 20,

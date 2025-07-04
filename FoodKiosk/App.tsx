@@ -75,15 +75,19 @@ function App() {
       <PaperProvider>
         <CartAnimationContext.Provider value={{ triggerCartBounce }}>
           <NavigationContainer>
-            <StatusBar barStyle="light-content" backgroundColor="#FF6B35" />
+            <StatusBar barStyle="light-content" backgroundColor="#1a1a1a" />
             <Tab.Navigator
               screenOptions={{
                 headerStyle: {
-                  backgroundColor: '#FF6B35',
+                  backgroundColor: '#2d2d2d',
                 },
-                headerTintColor: '#fff',
+                headerTintColor: '#e0e0e0',
                 tabBarActiveTintColor: '#FF6B35',
-                tabBarInactiveTintColor: '#666',
+                tabBarInactiveTintColor: '#888',
+                tabBarStyle: {
+                  backgroundColor: '#2d2d2d',
+                  borderTopColor: '#404040',
+                },
               }}
             >
               <Tab.Screen

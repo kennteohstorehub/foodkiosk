@@ -9,7 +9,6 @@ import {
   Dimensions,
   Animated,
   TextInput,
-  Vibration,
   Alert,
 } from 'react-native';
 import { Card, Button, Chip, Surface, Badge } from 'react-native-paper';
@@ -151,13 +150,6 @@ const MenuScreen = () => {
       // Use screen center as starting point for more reliable animation
       const buttonX = width / 2;
       const buttonY = height / 2;
-      
-      // Haptic feedback with error handling
-      try {
-        Vibration.vibrate(50);
-      } catch (vibrationError) {
-        console.log('Vibration not available:', vibrationError);
-      }
     
           // Enhanced button press animation with bounce (individual per item)
       const buttonScale = getButtonScaleAnim(item.id);
@@ -299,7 +291,7 @@ const MenuScreen = () => {
               ]}>
                               <Icon 
                 name={category.icon} 
-                size={24} 
+                size={26} 
                 color={selectedCategory === category.id ? '#fff' : '#FF6B35'} 
               />
               </View>
@@ -368,10 +360,10 @@ const MenuScreen = () => {
                     
                     <View style={styles.priceRow}>
                       <View style={styles.priceContainer}>
-                        <Text style={styles.itemPrice}>${item.price.toFixed(2)}</Text>
+                        <Text style={styles.itemPrice}>RM{item.price.toFixed(2)}</Text>
                         {item.originalPrice && (
                           <Text style={styles.originalPrice}>
-                            ${item.originalPrice.toFixed(2)}
+                            RM{item.originalPrice.toFixed(2)}
                           </Text>
                         )}
                       </View>
@@ -380,9 +372,11 @@ const MenuScreen = () => {
                         <TouchableOpacity
                           style={styles.addButton}
                           onPress={() => addToCart(item)}
-                          activeOpacity={0.8}
+                          activeOpacity={0.7}
                         >
-                          <Icon name="add" size={20} color="#fff" />
+                          <View style={styles.addButtonGradient}>
+                            <Icon name="add" size={22} color="#fff" />
+                          </View>
                         </TouchableOpacity>
                       </Animated.View>
                     </View>
@@ -432,7 +426,7 @@ const MenuScreen = () => {
           ]}
         >
           <View style={styles.flyingIcon}>
-            <Icon name="restaurant" size={24} color="#FF6B35" />
+            <Icon name="restaurant" size={26} color="#FF6B35" />
           </View>
         </Animated.View>
       ))}
@@ -459,7 +453,7 @@ const MenuScreen = () => {
           ]}
         >
           <View style={styles.successIcon}>
-            <Icon name="check" size={20} color="#4CAF50" />
+            <Icon name="check" size={22} color="#4CAF50" />
           </View>
           <Text style={styles.successText}>Added!</Text>
         </Animated.View>
@@ -471,10 +465,10 @@ const MenuScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#1a1a1a',
   },
   header: {
-    backgroundColor: '#fff',
+    backgroundColor: '#2d2d2d',
     paddingHorizontal: 20,
     paddingTop: 10,
     paddingBottom: 15,
@@ -485,7 +479,7 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     fontSize: 14,
-    color: '#666',
+    color: '#b0b0b0',
     fontWeight: '400',
   },
   brandText: {
@@ -497,7 +491,7 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#404040',
     borderRadius: 25,
     paddingHorizontal: 15,
     height: 45,
@@ -508,17 +502,17 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     fontSize: 16,
-    color: '#333',
+    color: '#e0e0e0',
   },
   categoriesSection: {
-    backgroundColor: '#fff',
+    backgroundColor: '#2d2d2d',
     paddingVertical: 15,
     marginBottom: 10,
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#e0e0e0',
     marginBottom: 15,
     paddingHorizontal: 20,
   },
@@ -535,23 +529,33 @@ const styles = StyleSheet.create({
     // Selected state handled by individual elements
   },
   categoryIcon: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: '#fff',
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#404040',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 8,
     borderWidth: 2,
     borderColor: '#FF6B35',
+    elevation: 4,
+    shadowColor: '#FF6B35',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    position: 'relative',
+    overflow: 'hidden',
   },
   categoryIconSelected: {
     backgroundColor: '#FF6B35',
-    borderColor: '#FF6B35',
+    borderColor: '#FF8C5A',
+    elevation: 6,
+    shadowOpacity: 0.4,
+    shadowRadius: 8,
   },
   categoryText: {
     fontSize: 12,
-    color: '#666',
+    color: '#b0b0b0',
     textAlign: 'center',
     fontWeight: '500',
   },
@@ -561,7 +565,7 @@ const styles = StyleSheet.create({
   },
   menuSection: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#1a1a1a',
     paddingTop: 15,
   },
   menuHeader: {
@@ -573,7 +577,7 @@ const styles = StyleSheet.create({
   },
   itemCount: {
     fontSize: 14,
-    color: '#666',
+    color: '#b0b0b0',
   },
   menuContainer: {
     flex: 1,
@@ -590,10 +594,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   menuCard: {
-    backgroundColor: '#fff',
+    backgroundColor: '#2d2d2d',
     borderRadius: 15,
     overflow: 'hidden',
     position: 'relative',
+    borderWidth: 1,
+    borderColor: '#404040',
   },
   popularBadge: {
     position: 'absolute',
@@ -635,12 +641,12 @@ const styles = StyleSheet.create({
   itemName: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#e0e0e0',
     marginBottom: 5,
   },
   itemDescription: {
     fontSize: 12,
-    color: '#666',
+    color: '#b0b0b0',
     lineHeight: 16,
     marginBottom: 12,
   },
@@ -659,22 +665,33 @@ const styles = StyleSheet.create({
   },
   originalPrice: {
     fontSize: 12,
-    color: '#999',
+    color: '#888',
     textDecorationLine: 'line-through',
     marginTop: 2,
   },
   addButton: {
     backgroundColor: '#FF6B35',
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 42,
+    height: 42,
+    borderRadius: 21,
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: 2,
+    elevation: 6,
     shadowColor: '#FF6B35',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.4,
+    shadowRadius: 8,
+    borderWidth: 2,
+    borderColor: '#FF8C5A',
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  addButtonGradient: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 21,
   },
   flyingItem: {
     position: 'absolute',
@@ -684,17 +701,19 @@ const styles = StyleSheet.create({
     pointerEvents: 'none',
   },
   flyingIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#fff',
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: '#2d2d2d',
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    elevation: 8,
+    shadowColor: '#FF6B35',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.4,
+    shadowRadius: 8,
+    borderWidth: 2,
+    borderColor: '#FF6B35',
   },
   successIndicator: {
     position: 'absolute',
@@ -704,18 +723,20 @@ const styles = StyleSheet.create({
     pointerEvents: 'none',
   },
   successIcon: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    backgroundColor: '#fff',
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: '#2d2d2d',
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: 3,
+    elevation: 6,
     shadowColor: '#4CAF50',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.4,
+    shadowRadius: 6,
     marginBottom: 5,
+    borderWidth: 2,
+    borderColor: '#4CAF50',
   },
   successText: {
     color: '#4CAF50',
